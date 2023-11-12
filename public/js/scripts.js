@@ -12,7 +12,11 @@ socket.on('user_connected', (username) => {
 
 socket.on('new_chat', (data) => {
   const { chat, username } = data;
-  drawNewChat(`${username} : ${chat}`);
+  drawNewChat(`${username}: ${chat}`);
+});
+
+socket.on('disconnect_user', (username) => {
+  drawNewChat(`${username}: bye...`);
 });
 
 function handleSubmit(event) {
@@ -20,7 +24,7 @@ function handleSubmit(event) {
   const inputValue = event.target.elements[0].value;
   if (!inputValue) return;
   socket.emit('submit_chat', inputValue);
-  drawNewChat(`me : ${inputValue}`);
+  drawNewChat(`me: ${inputValue}`);
   event.target.elements[0].value = '';
 }
 
