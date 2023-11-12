@@ -7,7 +7,7 @@ const chattingBoxElement = getElementById('chatting_box');
 const formElement = getElementById('chat_form');
 
 socket.on('user_connected', (username) => {
-  drawNewChat(`${username} connected`);
+  drawNewChat(`${username} connected`, true);
 });
 
 socket.on('new_chat', (data) => {
@@ -24,7 +24,7 @@ function handleSubmit(event) {
   const inputValue = event.target.elements[0].value;
   if (!inputValue) return;
   socket.emit('submit_chat', inputValue);
-  drawNewChat(`me: ${inputValue}`);
+  drawNewChat(`me: ${inputValue}`, true);
   event.target.elements[0].value = '';
 }
 
@@ -32,13 +32,23 @@ function drawHelloStranger(username) {
   helloStrangerElement.innerText = `Hello ${username} Stranger :)`;
 }
 
-function drawNewChat(message) {
+function drawNewChat(message, isMe = false) {
   const wrapperChatBox = document.createElement('div');
-  wrapperChatBox.innerHTML = `
-    <div>
+  wrapperChatBox.className = 'clearfix';
+  let chatBox;
+  if (!isMe)
+    chatBox = `
+    <div class='bg-gray-300 w-3/4 mx-4 my-2 p-2 rounded-lg clearfix break-all'>
       ${message}
-    <div>
-  `;
+    </div>
+    `;
+  else
+    chatBox = `
+    <div class='bg-white w-3/4 ml-auto mr-4 my-2 p-2 rounded-lg clearfix break-all'>
+      ${message}
+    </div>
+    `;
+  wrapperChatBox.innerHTML = chatBox;
   chattingBoxElement.append(wrapperChatBox);
 }
 
