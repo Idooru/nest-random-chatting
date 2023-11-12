@@ -38,9 +38,9 @@ export class ChatsGateway
     @ConnectedSocket() socket: Socket,
   ): string {
     this.logger.log(`${username} is entered`);
-    console.log(username);
-    console.log(socket.id);
-    socket.emit('hello_user', 'hello ' + username);
-    return 'Hello world';
+
+    socket.broadcast.emit('user_connected', username);
+
+    return username;
   }
 }
