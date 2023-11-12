@@ -7,7 +7,13 @@ const chattingBoxElement = getElementById('chatting_box');
 const formElement = getElementById('chat_form');
 
 function helloUser() {
-  return prompt('What is your name?');
+  const username = prompt('What is your name?');
+  socket.emit('new_user', username, (data) => {
+    console.log(data);
+  });
+  socket.on('hello_user', (data) => {
+    console.log(data);
+  });
 }
 
 function init() {

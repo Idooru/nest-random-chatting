@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
+import { ChatsModule } from './chats/chats.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import * as mongoose from 'mongoose';
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.MONGO_URL),
+    ChatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
